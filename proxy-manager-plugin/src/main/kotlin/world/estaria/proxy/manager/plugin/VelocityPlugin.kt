@@ -22,6 +22,7 @@ class VelocityPlugin @Inject constructor(
         ProxyManagerApi.initialize()
     }
 
+    @Subscribe
     fun handleProxyReload(event: ProxyReloadEvent) {
         ProxyManagerApi.instance.configHandler.updateConfig()
     }
