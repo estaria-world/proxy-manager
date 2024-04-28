@@ -1,0 +1,10 @@
+{
+  "id": "proxy-manager",
+  "name": "proxy-manager",
+  "version": "1.0.1",
+  "authors": [
+    "MrManHD"
+  ],
+  "dependencies": [],
+  "main": "world.estaria.proxy.manager.plugin.VelocityPlugin"
+}
