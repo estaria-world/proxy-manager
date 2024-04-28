@@ -12,7 +12,7 @@ class ProxyConfigHandler(
 ) {
 
     private val configSerializer = ProxyConfig.serializer()
-    private val configName = "server-registration.yaml"
+    private val configName = "proxy-configuration.yaml"
     private val configMapManager = KubeConfigMapKit.initializeKubeConfig("strela-system", kubernetesClient)
 
     init {
