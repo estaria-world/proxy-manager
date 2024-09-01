@@ -19,7 +19,7 @@ class VelocityPlugin @Inject constructor(
 
     @Subscribe
     fun handleInitialize(event: ProxyInitializeEvent) {
-        ProxyManagerApi.initialize()
+        ProxyManagerApi.initialize("estaria-world/proxy-configurations/master/configuration.yaml")
     }
 
     @Subscribe

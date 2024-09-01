@@ -1,17 +1,14 @@
 package world.estaria.proxy.manager.api
 
-import io.fabric8.kubernetes.client.KubernetesClient
-import io.fabric8.kubernetes.client.KubernetesClientBuilder
-
 /**
  * @author Niklas Nieberler
  */
 
 class ProxyManagerApi(
-    private val kubernetesClient: KubernetesClient
+    path: String
 ) {
 
-    val configHandler = ProxyConfigHandler(kubernetesClient)
+    val configHandler = ProxyConfigHandler(path)
 
     init {
         instance = this
@@ -21,22 +18,14 @@ class ProxyManagerApi(
         lateinit var instance: ProxyManagerApi
             private set
 
-        /**
-         * Initialize a proxy manager instance
-         * @return new instance of [ProxyManagerApi]
-         */
-        fun initialize(): ProxyManagerApi {
-            val kubernetesClient = KubernetesClientBuilder().build()
-            return ProxyManagerApi(kubernetesClient)
-        }
 
         /**
          * Initialize a proxy manager instance
-         * @param kubernetesClient the kubernetes client
+         * @param path the config url path
          * @return new instance of [ProxyManagerApi]
          */
-        fun initialize(kubernetesClient: KubernetesClient): ProxyManagerApi {
-            return ProxyManagerApi(kubernetesClient)
+        fun initialize(path: String): ProxyManagerApi {
+            return ProxyManagerApi(path)
         }
     }
 

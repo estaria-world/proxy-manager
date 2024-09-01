@@ -1,33 +1,29 @@
 package world.estaria.proxy.manager.api
 
-import io.fabric8.kubernetes.client.KubernetesClient
-import world.estaria.kube.configmap.kit.KubeConfigMapKit
+import world.estaria.github.file.manager.properties.GitHubYamlLoader
 
 /**
  * @author Niklas Nieberler
  */
 
 class ProxyConfigHandler(
-    kubernetesClient: KubernetesClient
+    path: String
 ) {
 
-    private val configSerializer = ProxyConfig.serializer()
-    private val configName = "proxy-configuration.yaml"
-    private val configMapManager = KubeConfigMapKit.initializeKubeConfig("strela-system", kubernetesClient)
+    private val yamlLoader = GitHubYamlLoader(path, ProxyConfig.serializer())
+    private var config = yamlLoader.getYaml()
 
     init {
-        if (!this.configMapManager.existsConfig(configName)) {
-            this.configMapManager.createConfigMap(configName, configSerializer, ProxyConfig.Default.get())
-        }
+        if (this.yamlLoader.getYaml() == null)
+            throw NullPointerException("failed to find proxyConfig.yaml in github")
     }
 
     fun updateConfig() {
-        this.configMapManager.updateConfig(this.configName)
+        this.config = this.yamlLoader.getYaml()
     }
 
     fun getConfig(): ProxyConfig {
-        return this.configMapManager.getConfig(this.configName, this.configSerializer)
-            ?: throw NullPointerException("failed to find $configName")
+        return this.config ?: throw NullPointerException("failed to find proxyConfig.yaml")
     }
 
 }
